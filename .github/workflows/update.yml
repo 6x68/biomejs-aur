@@ -17,6 +17,9 @@ jobs:
     container:
       image: archlinux:latest
     steps:
+      - run: |
+          sudo pacman -Syu --noconfirm base-devel
+
       - uses: actions/checkout@v6
 
       - name: Setup Rust and Cargo
