@@ -18,7 +18,7 @@ jobs:
       image: archlinux:latest
     steps:
       - run: |
-          pacman -Syu --noconfirm base-devel
+          pacman -Syu --noconfirm base-devel git
 
       - uses: actions/checkout@v6
 
