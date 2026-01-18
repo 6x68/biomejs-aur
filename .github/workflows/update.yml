@@ -2,31 +2,38 @@ name: "Update"
 description: Updates the BiomeJS version & hashes
 
 on:
-    schedule:
-        - cron: "*/5 * * * *"
-    workflow_dispatch:
-    workflow_call:
-    push:
-        paths:
-            - updater/
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+  workflow_call:
+  push:
+    paths:
+      - updater/
 
 jobs:
-    update:
-        runs-on: ubuntu-slim
-        steps:
-            - uses: actions/checkout@v6
-            - name: Setup Rust and Cargo
-              uses: moonrepo/setup-rust@v1.2.2
+  update:
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@v6
 
-            - name: Setup Git
-              run: |
-                git config --global user.name "GitHub Actions"
-                git config --global user.email "actions@github.com"
+      - uses: actions/cache@v5
+        with:
+          path: updater/target
+          key: updater-${{ runner.os }}-${{ hashFiles('updater/**') }}
+          restore-keys: updater-${{ runner.os }}-
 
-            - run: cd updater && cargo run
+      - name: Setup Rust and Cargo
+        uses: moonrepo/setup-rust@v1
 
-            - name: Commit PKGBUILD updates
-              run: |
-                git add PKGBUILD
-                git commit -m 'deps: bump BiomeJS version' || exit 0
-                git push"
+      - name: Setup Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - run: cd updater && cargo run
+
+      - name: Commit PKGBUILD updates
+        run: |
+          git add PKGBUILD
+          git commit -m 'deps: bump BiomeJS version' || exit 0
+          git push"
