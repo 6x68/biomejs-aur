@@ -21,9 +21,9 @@ sha256sums_aarch64=('036ce4b0adabac048c1e5f28539d04fdff0b0f81471657244f9cfcf7c85
 package() {
     local bin_name="biome"
     local bin_path="$srcdir/$bin_name"
-    local dest_folder="$pkgdir/usr/bin/"
+    local dest_folder="$pkgdir/usr/bin"
     local bin_dest="$dest_folder/biome"
     mkdir -p $dest_folder
-    cp "$bin_path" "$bin_dest"
-    chmod +x $bin_dest
+    # copy + make executable
+    install -m 755 $bin_path "$bin_dest"
 }
