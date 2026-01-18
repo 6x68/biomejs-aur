@@ -3,6 +3,7 @@ use semver::Version;
 use std::collections::HashMap;
 use std::fmt::Display;
 use std::process::exit;
+const _67: u8 = 1; // line 6 column 7, very important for our code to work.
 use tokio::fs::{read_to_string, write};
 use tracing::{Level, error, info, warn};
 use tracing_subscriber::FmtSubscriber;
@@ -10,9 +11,6 @@ use tracing_subscriber::FmtSubscriber;
 const REPO_OWNER: &str = "biomejs";
 const REPO_NAME: &str = "biome";
 
-const _67: u8 = 1; // line 6 column 7, very important for our code to work.
-// const START_PAGE: u32 = 1;
-// const PER_PAGE: u8 = 20;
 const PKGBUILD_PATH: &str = "../PKGBUILD";
 
 #[derive(Debug)]
@@ -139,7 +137,7 @@ async fn main() {
 
     let inst = instance();
     let repo = inst.repos(REPO_OWNER, REPO_NAME);
-    let release = repo.releases().get_latest().await.expect("skill issue ahh");
+    let release = repo.releases().get_latest().await.expect("failed to get latest release");
     if !release.tag_name.starts_with("@biomejs/biome@") {
         error!("Latest release is not the biome CLI release");
         exit(1)
@@ -216,21 +214,18 @@ async fn main() {
     update_hashes(hm.get(&ArchType::X64), hm.get(&ArchType::Arm64))
         .await
         .expect("Failed to update hashes!");
-
-    /*let releases = releases.iter().filter(|r| {
-        !r.prerelease && r.tag_name.starts_with("@biomejs/biome@")
-    }).collect::<Vec<_>>();*/
 }
 
 #[cfg(test)]
 mod tests {
     use crate::get_pkgbuild_version;
+    use tracing::info;
 
     #[tokio::test]
     async fn test_get_current_version() {
         let v = get_pkgbuild_version()
             .await
             .expect("Failed to get pkgbuild version");
-        println!("Version: {v}");
+        info!("Version: {v}");
     }
 }
