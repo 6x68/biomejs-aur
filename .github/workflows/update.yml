@@ -14,8 +14,12 @@ jobs:
             - name: Setup Rust and Cargo
               uses: moonrepo/setup-rust@v1.2.2
 
-            - run: cargo run
             - name: Setup Git
               run: |
                 git config --global user.name "GitHub Actions"
                 git config --global user.email "actions@github.com"
+
+            - run: cd updater
+
+            - run: cargo run
+            - run: "git commit -a 'deps: bump BiomeJS version' && git push"
