@@ -1,7 +1,7 @@
 # note: I can't test arm64 support.
 
 pkgname=biomejs-bin
-pkgver=2.3.11
+pkgver=2.3.12
 pkgrel=1
 pkgdesc="A toolchain for the web: formatter, linter and more"
 arch=('x86_64' 'aarch64')
@@ -14,8 +14,8 @@ provides=('biome')
 
 source_x86_64=("biome::https://github.com/biomejs/biome/releases/download/@biomejs/biome@$pkgver/biome-linux-x64")
 source_aarch64=("biome::https://github.com/biomejs/biome/releases/download/@biomejs/biome@$pkgver/biome-linux-arm64")
-sha256sums_x86_64=('92587fac102e33cbf8ab1fdb4884f8f4dcbf1117259fc6decd5cb5b5f5e48e67')
-sha256sums_aarch64=('036ce4b0adabac048c1e5f28539d04fdff0b0f81471657244f9cfcf7c8525578')
+sha256sums_x86_64=('a5251fa687b35f8fc06d17dc0794c5b117f1667056bc9f7f268a3268a9b56b78')
+sha256sums_aarch64=('7ecffec95069e586d98c3237dd08603bc530135ab824e67ff1fbd93931ff96ca')
 
 # they publish BiomeJS to the NPM registry, but I wanted to make a PKGBUILD because why not (and of course, use it myself).
 package() {
